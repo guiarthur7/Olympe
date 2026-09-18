@@ -17,7 +17,7 @@ function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <img src="/logo.png" alt="Olympe Logo" className="w-10 h-10 object-contain" />
+            <img src="./logo.png" alt="Olympe Logo" className="w-10 h-10 object-contain" />
             <span className="text-2xl font-black tracking-widest uppercase">Olympe<span className="text-gray-400">.</span></span>
           </Link>
 
@@ -57,13 +57,13 @@ function Navbar() {
 
 function Footer() {
   return (
-    <footer className="bg-[#0a0a0a] border-t border-white/10 py-12 text-center">
-      <div className="max-w-7xl mx-auto px-4">
+    <footer className="bg-[#050505] border-t border-white/10 py-12 px-4 mt-auto">
+      <div className="max-w-7xl mx-auto flex flex-col items-center">
+        <img src="./logo.png" alt="Olympe Logo" className="w-16 h-16 object-contain mb-6 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
         <div className="flex items-center justify-center gap-3 mb-6">
-          <img src="/logo.png" alt="Olympe Logo" className="w-8 h-8 opacity-70 grayscale" />
           <span className="text-xl font-black uppercase tracking-widest text-gray-300">Olympe<span className="text-white">.</span></span>
         </div>
-        <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto">
+        <p className="text-gray-500 text-sm mb-6 max-w-md mx-auto text-center">
           Olympe n'est pas affilié à Rockstar Games, Take-Two Interactive ou toute autre entité liée. Grand Theft Auto V est une marque déposée de Take-Two Interactive.
         </p>
         <div className="flex justify-center gap-6 text-sm font-bold text-gray-400">
@@ -119,7 +119,7 @@ function Home() {
       <div className="relative flex items-center justify-center min-h-screen">
         <div className="absolute inset-0 z-0">
           <img 
-            src="/bg.jpg" 
+            src="./bg.jpg" 
             alt="Olympe Background" 
             className="w-full h-full object-cover opacity-40 grayscale-[20%]"
           />
