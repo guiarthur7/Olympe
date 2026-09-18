@@ -295,8 +295,15 @@ function Reglement() {
   return (
     <div className="min-h-screen bg-[#0a0a0a] pt-32 pb-24 text-white">
       <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight mb-8 text-center">Règlement du Serveur</h1>
         
+        {/* Title Row - Aligned with the right content box */}
+        <div className="flex flex-col md:flex-row gap-8 mb-8">
+          <div className="w-full md:w-1/4 hidden md:block"></div>
+          <div className="w-full md:w-3/4">
+            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-left">Règlement du Serveur</h1>
+          </div>
+        </div>
+
         <div className="flex flex-col md:flex-row gap-8">
           {/* Sidebar Tabs */}
           <div className="w-full md:w-1/4 flex flex-col gap-2">
