@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
 import { Play, ChevronRight, Users, Shield, Car, Wrench, MessageCircle, Map, Menu, X } from 'lucide-react';
+import logoUrl from './assets/logo.png';
+import bgUrl from './assets/bg.jpg';
 
 const DISCORD_LINK = "https://discord.gg/olymperp";
 
@@ -17,7 +19,7 @@ function Navbar() {
         <div className="flex justify-between items-center h-20">
           {/* Logo */}
           <Link to="/" className="flex items-center gap-3">
-            <img src="./logo.png" alt="Olympe Logo" className="w-10 h-10 object-contain" />
+            <img src={logoUrl} alt="Olympe Logo" className="w-10 h-10 object-contain" />
             <span className="text-2xl font-black tracking-widest uppercase">Olympe<span className="text-gray-400">.</span></span>
           </Link>
 
@@ -59,7 +61,7 @@ function Footer() {
   return (
     <footer className="bg-[#050505] border-t border-white/10 py-12 px-4 mt-auto">
       <div className="max-w-7xl mx-auto flex flex-col items-center">
-        <img src="./logo.png" alt="Olympe Logo" className="w-16 h-16 object-contain mb-6 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
+        <img src={logoUrl} alt="Olympe Logo" className="w-16 h-16 object-contain mb-6 opacity-50 grayscale hover:grayscale-0 hover:opacity-100 transition-all duration-300" />
         <div className="flex items-center justify-center gap-3 mb-6">
           <span className="text-xl font-black uppercase tracking-widest text-gray-300">Olympe<span className="text-white">.</span></span>
         </div>
@@ -119,7 +121,7 @@ function Home() {
       <div className="relative flex items-center justify-center min-h-screen">
         <div className="absolute inset-0 z-0">
           <img 
-            src="./bg.jpg" 
+            src={bgUrl} 
             alt="Olympe Background" 
             className="w-full h-full object-cover opacity-40 grayscale-[20%]"
           />
