@@ -232,65 +232,143 @@ function Reglement() {
   const [activeTab, setActiveTab] = useState('global');
 
   const tabs = [
-    { id: 'global', name: 'Global', description: 'Règles générales du serveur' },
-    { id: 'hrp', name: 'HRP', description: 'Règles Hors RolePlay' },
-    { id: 'illegal', name: 'Illégal', description: 'Activités illégales' },
-    { id: 'legal', name: 'Légal', description: 'Entreprises et activités légales' },
-  ];
+  { id: 'global', name: 'Global', description: 'Règles générales du serveur' },
+  { id: 'hrp', name: 'HRP', description: 'Règles Hors RolePlay' },
+  { id: 'illegal', name: 'Illégal', description: 'Activités illégales' },
+  { id: 'legal', name: 'Légal', description: 'Entreprises et activités légales' },
+];
 
-  const globalRules = [
-    { title: "Cheat & mods interdits", text: "Tout mod menu, ou mod style no recoil, no bush, no water, no props, hitbox, bullet penetration, no spread, no ragdoll etc.., et ou logiciel de cheat est interdit et sera sanctionné d’un ban définitif." },
-    { title: "Pseudos offensants", text: "Tout pseudo offensant, raciste ou contenant des propos inappropriés, est totalement interdit, en cas de non-respect de cette règle, un bannissement temporaire ou permanent vous sera administré en fonction de la situation." },
-    { title: "/me abusifs", text: "Le /me du style “J'suis nul ontop”, tout comme les /me inutiles, la depop, ez ou pour insulter ou autre sont interdit pendant les scènes rp, le /me sert à décrire une action RP, donc tout /me abusifs pendant une scène RP sera sanctionné d'un ban perm." },
-    { title: "Modificateur de voix", text: "Il est interdit d’utiliser un modificateur de voix qui n’apporte RIEN de concret en RP. (Un modificateur de voix utilisé pendant un échange d’otage avec la police pour dissimuler votre identité est autorisé par exemple)" },
-    { title: "Discriminations interdites", text: "L’homophobie, la transphobie, le racisme, la zoophilie, la pédophilie, ou toutes autres choses discriminatoire d'une quoiqu'onques façon sont strictement interdit et serons sanctionné d’un ban définitif." },
-    { title: "Mensonges aux staffs", text: "Les mensonges aux staffs sont considérés comme une mauvaise foi flagrante et sont interdits, vous serez sanctionnés et surveillé par la suite." },
-    { title: "Accessoires non boutique", text: "Tout accessoires mis sur une arme NON Permanente (NON Boutique) sera non remboursable en cas d'échange ou de dons à un autre joueur même sous preuve. (Les accessoires restant collé sur les armes non boutique, en cas de perte ou de saisie par la LSPD ou autre, sera considéré comme de la perte.)" },
-    { title: "Ventes IRL interdites", text: "Il est interdit de vendre des armes ou véhicules contre de l’argent IRL ! (Si cela arrive, nous ne seront en aucun cas responsable de toute arnaque ou autre soucis lié à cela.)" },
-    { title: "Échanges de comptes", text: "Les échanges de comptes rockstar game sont interdit, si une personne se fait ban, et que cette même personne à été sur votre compte rockstar game, même une fois, vous serez indirectement lié à son ban, et aucun unban ne sera possible tant que la personne ne sera pas unban." },
-    { title: "Ventes de comptes", text: "Les ventes de comptes rockstar game sont interdit, pour les même raisons que pour l'échange de compte." },
-    { title: "Use bug interdit", text: "L'utilisation de bugs ou de glitches dans votre RP est interdite. Cela inclut l'utilisation d'animations pour sortir de cellules ou le spam de touches pour avantager votre RP. Le \"use bug\" est proscrit sur le serveur." },
-    { title: "Publicités interdites", text: "Les publicités de tout type sont strictement interdites. Le serveur ne doit pas être utilisé à des fins publicitaires. (Discord/In Game)" }
-  ];
+const globalRules = [
+  {
+    title: "Respect & Vivre-ensemble",
+    text: "Tout comportement irrespectueux, harcèlement, menace, insulte, provocation ou acte discriminatoire (racisme, homophobie, transphobie, sexisme, zoophilie, pédophilie) est formellement interdit et passible de bannissement définitif. Les pseudos doivent rester corrects, adaptés et respectueux, sous peine de sanctions administratives."
+  },
+  {
+    title: "Règlement Discord & Canaux",
+    text: "Les membres doivent obligatoirement utiliser les salons prévus à cet effet sans dévier du sujet. Le spam, les envois massifs, la publicité pour d'autres serveurs ainsi que la diffusion de photos, conversations ou données privées sans consentement préalable sont formellement prohibés."
+  },
+  {
+    title: "Support & Tickets",
+    text: "L'ouverture d'un ticket requiert courtoisie, clarté dans la description du problème et respect des réponses du personnel. Il est interdit d'ouvrir plusieurs tickets sans motif valable ou de mentionner abusivement les membres du staff pour forcer une réponse ; tout ticket inactif pendant plus de 24 heures sera automatiquement clôturé."
+  },
+  {
+    title: "Sanctions, Bans & Enquêtes Staff",
+    text: "Le staff se réserve le droit de restreindre, suspendre ou révoquer l'accès au serveur en cas d'antécédents de triche, de duplication, de toxicité récurrente ou de sanctions sur d'autres communautés. L'évaluation s'appuie sur le comportement global, les candidatures et la bonne foi du joueur, une période probatoire pouvant être imposée sans nécessité de justification publique."
+  },
+  {
+    title: "Lexique & Notions Fondamentales RP",
+    text: "Le respect des principes de base est obligatoire : interdiction absolue du PowerGaming, du MetaGaming, du WinRP, du ForceRP, du FreeKill, du FreeLoot et du Carkill. Les joueurs doivent impérativement respecter le PainRP en simulant leurs blessures, appliquer un FearRP crédible face à la menace, faire preuve de FairPlay en acceptant les issues négatives, et ne jamais provoquer intentionnellement la police (CopBait)."
+  },
+  {
+    title: "Zones Safe",
+    text: "Les zones safes sont des espaces protégés au sein desquels toute forme de confrontation, de violence, d'activité illégale, d'agression ou d'enlèvement est rigoureusement interdite afin de garantir la tranquillité des interactions civiles."
+  }
+];
 
-  const hrpRules = [
-    { title: "Pseudo cohérent", text: "Tout pseudo discord doit être respectueux et cohérent avec le RP." },
-    { title: "Pseudo respectueux", text: "Tout pseudo offensant se verra sanctionnable." },
-    { title: "Channel discussion HRP", text: "Le Channel discussion HRP est mis en place afin de s’entraider et de communiquer entre vous !" },
-    { title: "Spam", text: "Merci de ne pas spammer ainsi que de vous respecter mutuellement." },
-    { title: "Photo", text: "Veillez à bien vérifier si vous postez votre photo dans la section HRP ou RP." },
-    { title: "Publicité", text: "Toute pub serveur sera sanctionnée d’un ban définitif !" },
-    { title: "Serveurs", text: "Uniquement les serveurs discords reliés à Olympe pourront être partagés." },
-    { title: "Questionnement", text: "Si vous avez une question ou un quelconque problème sur le serveur, merci de créer un ticket sur le discord afin que l’on puisse vous aider." },
-    { title: "Savoir-vivre", text: "Merci de respecter les formules de politesses et de ne pas spam les membres du staff." },
-    { title: "Pings Admin/Modos", text: "Les pings admin/modo/helpeur sont strictement interdit, si vous avez besoin de parler à une personne en particulier indiquez le dans le ticket et les staffs se chargeront de tenir au courant la personne concernée." },
-    { title: "Channel Attente Support", text: "Le Channel \"Attente Support\" est créé afin de vous aider si vous rencontrez un souci en jeu ou que vous avez besoin d’aide et de précisions." },
-    { title: "Savoir-être", text: "N'oubliez pas que vous n'êtes pas tout seul, il faudra dans certains cas, vous munir de patience le temps qu'un staff vous réponde ou vous prenne en BDA. (Besoin d'aide vocal)" }
-  ];
+const hrpRules = [
+  {
+    title: "Graphismes, Packs & Avantages Tiers",
+    text: "Afin de préserver une équité absolue, tous les mods apportant un avantage concurrentiel sont strictement interdits : packs No Props, No Elements, No Water, No Bush, crosshairs ou viseurs personnalisés, Kill/Blood/Hit Effects, Tracers, modifications du champ de vision (FOV) ou fichiers de stamina illimitée. Chaque joueur demeure responsable de l'intégrité de ses fichiers de jeu sous peine de sanctions sévères."
+  },
+  {
+    title: "Politique de Remboursements",
+    text: "Vous êtes entièrement responsable de la sécurité de vos biens : anticipez les reboots réguliers en mettant vos affaires à l'abri, vérifiez systématiquement le destinataire et le montant de vos virements, renouvelez vos locations pour parer à l'inactivité et assumez les accès accordés à des tiers en cas de vol ou de trahison. De même, aucune indemnisation n'est accordée pour la perte d'objets illégaux après un coma ou un crash, ni pour les vols dans les coffres de véhicules (hors vol d'arme), toute demande nécessitant obligatoirement des preuves vérifiables."
+  },
+  {
+    title: "Encadrement du Streaming",
+    text: "Le streaming est autorisé à condition de bannir le trashtalk et tout dénigrement du projet ou de sa communauté. Il est strictement interdit d'exploiter les informations du chat en jeu (streamhack/metagaming) et le streamer doit obligatoirement couper l'image et le son dès l'instant où un membre du staff intervient pour une démarche administrative."
+  },
+  {
+    title: "Règles Générales du Wipe & Mort RP",
+    text: "Un wipe supprime intégralement l'histoire du personnage, exigeant la création d'une nouvelle identité sans lien familial, vengeur ou relationnel avec l'ancienne, et sans transmission de biens matériels ou financiers. La Mort RP peut être décrétée via dossier validé, NoFear caractérisé ou abus de tirs, et ne peut être sollicitée si le compte affiche des dettes ou des poursuites judiciaires pendantes."
+  },
+  {
+    title: "Interdictions Générales en Jeu",
+    text: "Sont formellement prohibés : l'incarnation de mineurs (18 ans minimum requis), les vocaux externes à FiveM en cours de scène, le RP ou contenu à caractère sexuel, les propos HRP en vocal (« GoPro », « papillon »), le usebug et spam d'animations, les transactions contre de l'argent réel, l'achat/vente de cartes bancaires, les annonces illégales sur applications publiques, la fuite à la nage non concertée et l'usage de tenues d'entreprises ou de services d'urgence hors service."
+  },
+  {
+    title: "Coma, Déconnexions & Utilisation du /me",
+    text: "Tomber dans le coma n'entraîne aucune amnésie des faits antérieurs mais interdit strictement de communiquer (oralement ou par écrit pour renseigner autrui), de trash le corps ou de le déplacer pour entraver les secours. La commande /me doit exclusivement servir à décrire l'état physiologique ou émotionnel du personnage, et toute rancœur HRP ou vengeance post-réanimation est formellement proscrite."
+  }
+];
 
-  const illegalRules = [
-    { title: "Retour hôpital", text: "Lors d’une scène, le retour hôpital est AUTORISÉ si au bout de 20min après la fin de la scène aucun EMS n’est intervenu." },
-    { title: "/porter pour les cadavres", text: "/porter un cadavre est AUTORISÉ uniquement afin d'aider les EMS après un GF." },
-    { title: "Véhicules OFF-ROAD", text: "Les véhicules de la catégorie OFF-ROAD (import ou non) sont LES SEULS AUTORISÉS à traverser des chemins de terre, des montagnes, et sont les seuls à pouvoir aller à Cayo." },
-    { title: "Radio pendant un braquage", text: "La demande de radio lors d'un braquage est AUTORISÉE (l'otage n'a pas le droit de mentir sur la fréquence.)" },
-    { title: "Masque", text: "Si la personne est masquée, il est AUTORISÉ de reconnaître ses tatouages, signe de gang, etc. Également de distinguer si c'est une femme ou un homme, de comprendre son accent." },
-    { title: "Vol véhicules civils", text: "Il est AUTORISÉ de voler des véhicules civils." },
-    { title: "Alliance", text: "Il est AUTORISÉ de faire une alliance pour faire du business." },
-    { title: "Ventes armes à feux illégales", text: "Il est AUTORISÉ de vendre des armes à feu obtenu illégalement." },
-    { title: "Loot", text: "Il est AUTORISÉ de loot uniquement 50% de la marchandise ou de l'argent sale/liquide sur une personne." },
-    { title: "OP Gang", text: "Le nombre de véhicules AUTORISÉ en convoi est de : 7 + 2 backeuse (2 personnes max) (pour un total de 32 places)" },
-    { title: "Braquages", text: "Il est AUTORISÉ de braquer des personnes seulement si vous êtes égaux ou en supériorité numérique." },
-    { title: "PO de groupes", text: "Il est AUTORISÉ de PO plusieurs groupes en même temps uniquement s'ils sont présents sur un même point chaud et que votre groupe est clairement en supériorité numérique., (Exemple : Zone de vente, points de drogues)" }
-  ];
+const illegalRules = [
+  {
+    title: "Communication & Gestion des Groupes",
+    text: "Les membres d'un groupe doivent arborer leurs rôles Discord, respecter les référents dédiés et gérer leurs litiges via des tickets détaillés avec preuves. Tout joueur débute en civil avant de créer ou rejoindre une Petite Frappe puis de soumettre un dossier cohérent validé par le staff pour devenir un groupe officiel ; un joueur ne peut posséder qu'un seul personnage impliqué dans l'illégal sous peine de ban."
+  },
+  {
+    title: "Conduite des Activités Criminelles & Fear",
+    text: "Le Fear RP s'applique rigoureusement face au danger et il est interdit de retourner se réfugier à son quartier après une prise en chasse par les autorités ou des rivaux. Les alliances entre factions criminelles sont interdites, le DarkChat constitue le seul canal de vente autorisé pour l'illégal, et les scènes de torture ou mutilations nécessitent impérativement l'accord de la victime ainsi que l'approbation du staff."
+  },
+  {
+    title: "Prises d'Otages & Rançons",
+    text: "Toute prise d'otage exige un motif RP valable (les faux otages étant interdits) et ne peut cibler des services publics que de manière exceptionnelle sans voler leur matériel de service. Les rançons sont plafonnées à 5 000 $ par individu et 1 500 $ par véhicule sans exiger de virement bancaire, tandis qu'il est interdit d'attirer des personnes hors d'un commerce ou de lancer une prise d'otage immédiatement après un échange de tirs."
+  },
+  {
+    title: "Fusillades, Drive-By & Affrontements",
+    text: "Les tirs constituent un ultime recours précédé d'une véritable interaction verbale (limite d'une fusillade par groupe et par soirée), sans avantage stratégique abusif ni déplacement de corps au sol. Les Drive-by et Walk-by sont réservés aux gangs à une vitesse maximale de 50 km/h avec obligation de mettre pied à terre pour dépouiller, tout retour sur zone après réanimation étant strictement exclu."
+  },
+  {
+    title: "Production, Vente de Drogues & Récoltes",
+    text: "La production et la vente de stupéfiants sont proscrites dans les zones safes ainsi que dans un rayon de 3 km autour des QG officiels. Pour effectuer des ventes aux PNJ (interdites aux organisations), le produit doit avoir été acheté à un tiers sans fuite immédiate en véhicule, et les récoltes doivent s'effectuer équitablement dans des camionnettes adaptées (Speedo, Burrito, Rumpo) sans monopolisation des horaires."
+  },
+  {
+    title: "Véhicules, Convois & Poursuites",
+    text: "Les véhicules supersport, deux-roues et vélos sont interdits pour les méfaits (sauf dérogations spécifiques aux MC), les poursuites devant strictement opposer un véhicule contre un sans renforts opportunistes. Les convois sont interdits hormis pour les clubs de motards, les tirs sur pneumatiques requièrent 15 minutes de course préalable, et tout carjacking implique de laisser 48h au propriétaire via son numéro pour négocier une rançon."
+  },
+  {
+    title: "Armes, Munitions & Plafonds Tarifaires",
+    text: "Les civils et petites frappes sont limités au Judge Revolver et à la Pétoire classique (hors modèle MK II), le transfert d'armes entre personnages ou pour revente déléguée étant passible de ban permanent. Les stocks de munitions sont plafonnés (36 pour armes de poing, 24 pour pompes, 80 pour SMG, 90 pour fusils d'assaut) et les tarifs de revente sont encadrés : 10 000 $ (armes contondantes), 20 000 $ (armes blanches), 200 $ (objets de lancer) et 80 000 $ (armes de poing)."
+  },
+  {
+    title: "Braquages, Cambriolages & Attaques de Factions",
+    text: "Les braquages de Fleeca et bijouteries exigent au moins 2 malfaiteurs armés (avec au minimum 4 munitions), 2 otages non dépouillés, 2 véhicules maximum et 15 minutes d'attente des forces de l'ordre avant fuite. Les attaques de commerces imposent 5 minutes d'attente sans plan Mule ni otage, tandis que les assauts contre des entreprises, laboratoires ou business secondaires requièrent un dossier d'investigation RP validé au préalable par le staff."
+  },
+  {
+    title: "Règles de Loot, Délais de Revanche & Vols",
+    text: "Le freeloot et le pillage d'armes, munitions, radios ou téléphones sur un individu sont strictement interdits, le butin étant plafonné à 50 % d'un stackable ou 1 objet unique. Après une action hostile, un délai d'un jour (ou 2 heures en guerre officielle) doit séparer deux revanches ; les arnaques, le crochetage d'habitations pour séquestration et les faux rendez-vous Marketplace sont rigoureusement réprimés."
+  },
+  {
+    title: "Départ de Groupe, Wipe Criminel & Corruption",
+    text: "Tout départ volontaire d'un groupe officiel impose un wipe intégral sans emporter de ressources communes et un délai de 3 semaines s'applique avant d'intégrer une nouvelle faction officielle. La corruption au sein de l'État exige un dossier staff validé et reste restreinte aux fonctions subalternes (conseiller, secrétaire, garde du corps), à l'exclusion stricte du Gouverneur, Vice-Gouverneur, Chef de Cabinet et de l'IRS."
+  }
+];
 
-  const legalRules = [
-    { title: "Patron coffre", text: "Il est interdit pour les patrons de se servir dans le coffre de l’entreprise à des fins personnelles." },
-    { title: "Reprise d'entreprise en cas d'inactivité prolongée", text: "Les entreprises hors boutique sans activité patronale pendant 2 semaines seront récupérées et remises sous dossier." },
-    { title: "Vente d'entreprise", text: "Il est totalement interdit de vendre/donner son entreprise. Si vous ne souhaitez plus gérer votre entreprise, vous devez faire un ticket et celle-ci sera remise sous dossier." },
-    { title: "Spam", text: "Merci de ne pas spammer ainsi que de vous respecter mutuellement." },
-    { title: "Multi-métier", text: "Il est interdit d'avoir plusieurs emplois légaux en même temps sous peine de vous faire virer de vos deux jobs." },
-    { title: "Vol coffre entreprise", text: "Il est interdit de voler dans le coffre de son entreprise." }
-  ];
+const legalRules = [
+  {
+    title: "Police (SASP) : Éthique, Recrutement & Évolution",
+    text: "Rejoindre le SASP impose la majorité IRL, un background crédible et l'interdiction d'un second personnage actif ou d'un métier parallèle. Les agents doivent prioriser la création de scènes et le fair-play plutôt que l'interpellation systématique, accepter les enquêtes internes ou sanctions disciplinaires liées à leurs erreurs, et respecter scrupuleusement le Fear RP lors d'interventions à haut risque sans user de leurs équipements pour déséquilibrer abusivement le jeu."
+  },
+  {
+    title: "Police (SASP) : Gestion des Preuves & Environnement Carcéral",
+    text: "Seuls les indices et documents recueillis directement en jeu (photos de téléphone, rapports, bodycams activées) constituent des preuves judiciaires recevables, à l'exclusion formelle des captures, vocaux ou messages issus de Discord. Le vol de matériel policier est prohibé sans validation staff pour scène majeure, et la prison constitue un cadre de vie immersif où les détenus doivent pleinement jouer leur détention et en respecter les règles."
+  },
+  {
+    title: "Services Médicaux (SAMS) : Déontologie & Prise en Charge",
+    text: "Les membres du SAMS doivent impérativement être en service et revêtir leur uniforme officiel pour prodiguer des soins ou émettre des factures, toute complaisance envers des proches étant interdite. Soumis à une stricte neutralité vis-à-vis des conflits illégaux, ils ne peuvent détourner leurs ambulances à des fins privées ni basculer vers l'illégal sans évolution RP cohérente et validation par les instances compétentes."
+  },
+  {
+    title: "Gouvernement & Département de la Justice (DOJ)",
+    text: "Accessibles dès 17 ans HRP, les fonctions étatiques et judiciaires proscrivent tout rôleplay illégal, possession de second slot ou métier cumulé sous peine de radiation immédiate. Les bâtiments officiels sont des zones safes inviolables, les dossiers judiciaires demeurent strictement confidentiels et toute condamnation exceptionnelle (prison à vie ou CK) requiert la validation préalable du staff référent."
+  },
+  {
+    title: "Entreprises Générales : Gestion, Personnel & Cessions",
+    text: "Il est strictement interdit de diriger plusieurs entreprises, de faire des dépenses personnelles sur les fonds de la société, de dépasser 80 salariés ou de blanchir plus de 100 000 $ par semaine sans approbation. Les véhicules et biens professionnels ne peuvent être détournés, les vols de coffres sont limités à 200 items par personne et par semaine, et un délai de 2 mois avec reprise au grade le plus bas s'impose après un wipe avant toute réintégration."
+  },
+  {
+    title: "Communication d'Entreprise, Discord & IA",
+    text: "L'usage de Discord est strictement cantonné aux candidatures, démarches étatiques, catalogues et communications internes, toute autre interaction devant se jouer en ville. Les annonces RP sont limitées à 30 par semaine avec 30 minutes d'intervalle pour des motifs concrets (recrutement, promotions), tandis que l'utilisation d'images générées par IA pour les logos et affiches professionnelles est formellement bannie."
+  },
+  {
+    title: "Branches Spécifiques : Garages, Musique, Concession & Presse",
+    text: "Les mécaniciens doivent réintégrer tous leurs kits de réparation en stock en fin de service et limiter leurs 4x4 d'intervention à 2 unités. Les maisons de disques ne diffusent que des créations originales créées sur le serveur sans promotion HRP, le concessionnaire (strictement légal) limite les cautions à 15 000 $, et les médias émettent des cartes de visite infalsifiables sans participer au moindre réseau illégal."
+  },
+  {
+    title: "Immobilier & Décoration",
+    text: "Tout bien non exploité pendant 14 jours peut être réassigné (et supprimé après 30 jours sans remboursement), les emplacements devant rester accessibles et cohérents sans cession isolée d'adresses. Les agents immobiliers ne peuvent être liés à l'illégal ni subir de braquage en service, la sous-location opaque est interdite, et les décorations d'intérieur ne peuvent faire l'objet de vols, de transferts tiers ou de reventes non créées par le joueur."
+  }
+];
 
   return (
     <div className="min-h-screen bg-[#0a0a0a] pt-32 pb-24 text-white">
