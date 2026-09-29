@@ -236,6 +236,7 @@ function Reglement() {
   { id: 'hrp', name: 'HRP', description: 'Règles Hors RolePlay' },
   { id: 'illegal', name: 'Illégal', description: 'Activités illégales' },
   { id: 'legal', name: 'Légal', description: 'Entreprises et activités légales' },
+  { id: 'notions', name: 'Notions du RP', description: 'Lexique et notions du RolePlay' },
 ];
 
 const globalRules = [
@@ -363,6 +364,73 @@ const legalRules = [
   {
     title: "Immobilier & Décoration",
     text: "Règlement général : un bien non loué ou inutilisé pendant 14 jours peut être remplacé par l'agent immobilier ; après 30 jours sans utilisation, le bien peut être supprimé automatiquement. Aucun remboursement n'est accordé en cas de bannissement ou de non-renouvellement du bien, y compris pour les locataires. Tout propriétaire doit répondre aux demandes des agents immobiliers, sans quoi le bien peut être verrouillé. Il est interdit de vendre ou céder uniquement l'emplacement d'une propriété. Une propriété ne peut pas être placée à côté d'une entrée existante sans validation d'un référent Immobilier. Propriété & Garage : l'intérieur Motel est réservé aux motels, l'intérieur Caravane est réservé aux caravanes ; les garages doivent être placés face à une véritable porte de garage et les garages à plusieurs étages sont réservés aux tours ; il est interdit de louer uniquement le garage d'une maison ou de placer des propriétés sur des yachts. Agents immobilier : il est interdit de passer de l'illégal à l'Immobilier ou inversement (sous peine de wipe et blacklist) ; un agent immobilier ne peut participer à aucune activité illégale et il est interdit de le braquer ou le piéger en service pour obtenir des informations. Les informations clients sont strictement confidentielles et la sous-location dissimulée est interdite. Décoration : il est interdit de transférer une décoration achetée auprès de l'agence à un autre joueur, de revendre une décoration que vous n'avez pas créée vous-même ou de voler les décorations d'autres joueurs."
+  }
+];
+
+const notionsRules = [
+  {
+    title: "PowerGaming",
+    text: "Effectuer des actions impossibles ou irréalistes dans la vie réelle, en profitant des mécaniques du jeu pour réaliser des actions qui ne seraient pas réalisables en situation réelle."
+  },
+  {
+    title: "MetaGaming",
+    text: "Utiliser des informations obtenues en dehors du jeu afin d'obtenir un avantage ou d'influencer son comportement en RP."
+  },
+  {
+    title: "PainRP",
+    text: "Le PainRP consiste à jouer et à exprimer la douleur de son personnage lorsqu'il subit une blessure ou une situation douloureuse. Il est étroitement lié au FearRP."
+  },
+  {
+    title: "NoFear",
+    text: "Ne pas jouer la peur face à une situation dangereuse, notamment lorsqu'une arme est braquée sur soi. Même un personnage criminel doit être conscient du danger et craindre pour sa vie."
+  },
+  {
+    title: "FreeKill",
+    text: "Tuer un joueur sans raison RP valable, sans scène préalable ou sans justification cohérente. Cette pratique est strictement interdite."
+  },
+  {
+    title: "ForceRP",
+    text: "Imposer une action ou une situation à un autre joueur sans lui laisser la possibilité de réagir ou de jouer correctement la scène. Le ForceRP comprend également le Stream Stalk."
+  },
+  {
+    title: "FairPlay",
+    text: "Adopter une attitude respectueuse et jouer dans le but de proposer des scènes intéressantes à l'ensemble des joueurs. Il faut accepter les conséquences de ses actions et éviter les comportements visant uniquement à gagner la scène. Exemple : prendre volontairement des chemins irréalistes en montagne à moto uniquement pour échapper à des poursuivants."
+  },
+  {
+    title: "WinRP",
+    text: "Chercher à gagner une scène à tout prix, ne laisser aucune possibilité à l'adversaire de réagir ou refuser d'accepter une défaite RP. Il est important de savoir perdre et de rester FairPlay."
+  },
+  {
+    title: "StreamHack",
+    text: "Utiliser un live, une rediffusion ou toute autre diffusion externe afin d'obtenir des informations permettant d'avantager son personnage en RP. Tout cas de StreamHack peut être sanctionné par un bannissement permanent."
+  },
+  {
+    title: "UseBug",
+    text: "Exploiter volontairement un bug, un glitch ou une faille du jeu afin d'obtenir un avantage ou d'abuser d'une mécanique de jeu."
+  },
+  {
+    title: "Carkill",
+    text: "Tuer volontairement un joueur à l'aide d'un véhicule."
+  },
+  {
+    title: "Drive-By",
+    text: "Le Drive-By est uniquement autorisé pour les gangs. Il est cependant strictement interdit de tirer depuis un véhicule en mouvement."
+  },
+  {
+    title: "CopBait",
+    text: "Provoquer volontairement les forces de l'ordre dans le seul but de déclencher une course-poursuite ou une intervention policière sans véritable raison RP."
+  },
+  {
+    title: "FreeLoot",
+    text: "Fouiller ou récupérer les biens d'un joueur sans qu'une scène RP préalable ne le justifie."
+  },
+  {
+    title: "Cohérence RP",
+    text: "Lorsque vous incarnez un personnage, vous devez rester cohérent avec son histoire, sa personnalité, ses capacités et la situation dans laquelle il se trouve. Votre comportement doit rester crédible et réaliste."
+  },
+  {
+    title: "Comportement en Zone Safe",
+    text: "Les zones safes sont des lieux dans lesquels les activités illégales et les scènes conflictuelles sont interdites. Dans ces zones, il est notamment interdit de : kidnapper un joueur ; braquer ou voler un joueur ; voler un véhicule ; se battre ; commettre une quelconque action illégale ; déclencher volontairement une scène visant à contourner les règles de la zone safe. Il est également interdit de camper volontairement dans une zone safe afin d'éviter ou d'interrompre une scène RP. Les zones safes s'appliquent dans un rayon de 100 mètres autour des lieux suivants : Commissariat, Gouvernement, Palais de justice, Hôpital."
   }
 ];
 
