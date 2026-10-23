@@ -1,5 +1,65 @@
 @import "tailwindcss";
 
+/* Qampier by SoFarOffice — the bundled licence is "Demo for Personal Use" */
+@font-face {
+  font-family: "Qampier";
+  src: url("./assets/fonts/qampier-regular.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
+.font-olympe {
+  font-family: "Qampier", Georgia, serif;
+  font-weight: 400;
+}
+
+/* Home hero: each block rises in, staggered by --d, once the intro is gone */
+.olympe-hero[data-ready="false"] .olympe-rise {
+  opacity: 0;
+}
+.olympe-hero[data-ready="true"] .olympe-rise {
+  animation: olympe-rise 0.9s cubic-bezier(0.2, 0.7, 0.2, 1) var(--d, 0ms) both;
+}
+@keyframes olympe-rise {
+  from { opacity: 0; transform: translateY(18px); }
+}
+
+.olympe-fade-in {
+  animation: olympe-fade-in 1.2s ease both;
+}
+@keyframes olympe-fade-in {
+  from { opacity: 0; }
+}
+
+/* Let the page show through while the intro fades out */
+.ogp-root.olympe-intro {
+  background: transparent;
+}
+
+/* No wordmark under the tile: the logo and the call to action are enough */
+.olympe-intro .ogp-word {
+  display: none;
+}
+/* Site font instead of the component's monospace caption */
+.olympe-intro .ogp-caption {
+  font-family: inherit;
+  font-weight: 700;
+  font-size: max(11px, calc(var(--ogp-u) * 0.018));
+  color: #9a9aa2;
+}
+.olympe-intro .ogp-cta {
+  font-family: "Qampier", Georgia, serif;
+  font-weight: 400;
+  font-size: max(18px, calc(var(--ogp-u) * 0.034));
+  letter-spacing: 0.04em;
+}
+.olympe-intro .ogp-letter {
+  background: linear-gradient(180deg, #ffffff 20%, #c4c4cc 70%, #7a7a82 100%);
+  -webkit-background-clip: text;
+  background-clip: text;
+}
+
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;

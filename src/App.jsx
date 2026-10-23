@@ -1,10 +1,25 @@
 import React, { useState, useEffect } from 'react';
 import { HashRouter as Router, Routes, Route, Link, useLocation } from 'react-router-dom';
-import { Play, ChevronRight, Users, Shield, Car, Wrench, MessageCircle, Map, Menu, X } from 'lucide-react';
+import { Play, ChevronRight, Wrench, MessageCircle, Menu, X } from 'lucide-react';
 import logoUrl from './assets/logo.png';
+import logoFlatUrl from './assets/logo-flat.svg';
 import bgUrl from './assets/bg.jpg';
+import { ShaderBackground } from '@/components/ui/waves-background-2';
+import OnyxGlyphPreloader from '@/components/ui/onyx-glyph-preloader';
 
 const DISCORD_LINK = "https://discord.gg/olymperp";
+
+// Intro animation: shown once per browser tab session, on the home page.
+const INTRO_KEY = 'olympe-intro-seen';
+const INTRO_GLYPHS = Array.from({ length: 5 }, () => ({ src: logoFlatUrl, label: 'Olympe' }));
+
+function hasSeenIntro() {
+  try {
+    return sessionStorage.getItem(INTRO_KEY) === '1';
+  } catch {
+    return false;
+  }
+}
 
 function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -79,104 +94,106 @@ function Footer() {
 }
 
 function Home() {
-  const [titlePart1, setTitlePart1] = useState("");
-  const [titlePart2, setTitlePart2] = useState("");
-  const [cursorVisible, setCursorVisible] = useState(true);
+  const [introDone, setIntroDone] = useState(hasSeenIntro);
 
+  // No scrolling the page behind the intro
   useEffect(() => {
-    const text1 = "Bienvenue sur ";
-    const text2 = "Olympe.";
-    let i = 0;
-    let j = 0;
-    
-    const cursorInterval = setInterval(() => {
-      setCursorVisible(v => !v);
-    }, 500);
-
-    const type1 = setInterval(() => {
-      setTitlePart1(text1.slice(0, i + 1));
-      i++;
-      if (i === text1.length) {
-        clearInterval(type1);
-        const type2 = setInterval(() => {
-          setTitlePart2(text2.slice(0, j + 1));
-          j++;
-          if (j === text2.length) {
-            clearInterval(type2);
-          }
-        }, 150);
-      }
-    }, 80);
-
+    if (introDone) return;
+    document.body.style.overflow = 'hidden';
     return () => {
-      clearInterval(type1);
-      clearInterval(cursorInterval);
+      document.body.style.overflow = '';
     };
-  }, []);
+  }, [introDone]);
+
+  const finishIntro = () => {
+    try {
+      sessionStorage.setItem(INTRO_KEY, '1');
+    } catch {
+      // private mode: the intro will simply play again next time
+    }
+    setIntroDone(true);
+  };
 
   return (
     <>
-      {/* Hero Section */}
-      <div className="relative flex items-center justify-center min-h-screen">
-        <div className="absolute inset-0 z-0">
-          <img 
-            src={bgUrl} 
-            alt="Olympe Background" 
-            className="w-full h-full object-cover opacity-40 grayscale-[20%]"
+      {/* Intro */}
+      {!introDone && (
+        <div className="fixed inset-0 z-[100]">
+          <OnyxGlyphPreloader
+            className="olympe-intro"
+            glyphs={INTRO_GLYPHS}
+            mark={{ src: logoFlatUrl, label: 'Olympe' }}
+            markStyle="deboss"
+            word="Olympe"
+            caption=""
+            durationMs={3000}
+            cta="Cliquer pour commencer votre aventure sur Olympe"
+            fontFamily='-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif'
+            waitForClick
+            onComplete={finishIntro}
           />
-          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/80 via-[#0a0a0a]/60 to-[#0a0a0a]"></div>
+        </div>
+      )}
+
+      {/* Hero Section */}
+      <div className="olympe-hero relative flex min-h-screen flex-col" data-ready={introDone}>
+        <div className="absolute inset-0 z-0">
+          {/* Started only after the intro: both together drop frames */}
+          {introDone && <ShaderBackground className="w-full h-full olympe-fade-in" />}
+          <div className="absolute inset-0 bg-gradient-to-b from-[#0a0a0a]/60 via-transparent to-[#0a0a0a]"></div>
+          {/* Darker on the text side so it stays readable over the waves */}
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0a0a0a]/85 via-[#0a0a0a]/35 to-transparent"></div>
         </div>
 
-        <div className="relative z-10 text-center px-4 max-w-5xl mx-auto mt-16">
-          <div className="inline-block mb-6 px-4 py-1.5 rounded-full border border-white/20 bg-white/5 text-gray-300 font-bold text-xs tracking-widest uppercase backdrop-blur-sm">
-            Serveur Free Access
-          </div>
-          <h1 className="text-5xl md:text-7xl font-black uppercase tracking-tighter mb-6 drop-shadow-2xl h-[120px] sm:h-auto flex flex-col sm:block justify-center items-center">
-            <span>{titlePart1}</span>
-            <span className="text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.6)] italic">{titlePart2}</span>
-            <span className={`inline-block w-1 md:w-2 h-[1em] bg-white ml-2 align-middle ${cursorVisible ? 'opacity-100' : 'opacity-0'} transition-opacity duration-75`}></span>
-          </h1>
-          <p className="text-lg md:text-xl text-gray-300 mb-10 max-w-2xl mx-auto font-medium leading-relaxed drop-shadow-md">
-            Plongez dans l'univers immersif de San Andreas. Incarnez le personnage de vos rêves, rejoignez les forces de l'ordre, gérez une entreprise ou dominez la rue. Votre histoire commence ici.
-          </p>
-          
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <Link to="/reglement" className="w-full sm:w-auto bg-white hover:bg-gray-200 text-black px-8 py-4 rounded-md font-bold uppercase tracking-wider text-sm transition-all transform hover:scale-105 flex items-center justify-center shadow-[0_0_20px_rgba(255,255,255,0.3)]">
-              Règlement
-            </Link>
-            <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="w-full sm:w-auto bg-[#1a1a1a] border border-white/20 hover:bg-white/10 text-white px-8 py-4 rounded-md font-bold uppercase tracking-wider text-sm transition-all transform hover:scale-105 flex items-center justify-center backdrop-blur-sm">
-              Discord
-            </a>
-          </div>
-        </div>
-      </div>
+        <div className="relative z-10 flex flex-1 items-center">
+          {/* Same width and side padding as the navbar, so both edges line up with it */}
+          <div className="mx-auto grid w-full max-w-7xl items-center gap-14 px-4 pt-32 pb-16 sm:px-6 lg:grid-cols-[minmax(0,1fr)_minmax(0,436px)] lg:px-8 xl:grid-cols-[minmax(0,1fr)_minmax(0,476px)]">
+            <div className="mx-auto max-w-2xl text-center md:mx-0 md:text-left">
+              <div className="olympe-rise flex items-center justify-center gap-3 text-[11px] font-bold uppercase tracking-[0.35em] text-gray-400 md:justify-start">
+                <span className="h-px w-10 bg-white/40"></span>
+                Serveur RP · Free Access
+              </div>
 
-      {/* Stats Section */}
-      <div className="relative z-10 bg-[#0f0f0f] py-16 border-y border-white/5">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div className="p-4">
-              <div className="flex justify-center mb-4 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"><Users size={40} /></div>
-              <div className="text-4xl font-black mb-1">128</div>
-              <div className="text-gray-400 text-sm font-bold uppercase tracking-wider">Joueurs Connectés</div>
+              <p className="olympe-rise mt-10 text-sm font-semibold uppercase tracking-[0.4em] text-gray-300 md:text-base" style={{ '--d': '120ms' }}>
+                Bienvenue sur
+              </p>
+              <h1 className="olympe-rise font-olympe -mt-1 text-[clamp(4.5rem,14vw,10rem)] leading-[0.95] text-white drop-shadow-[0_0_40px_rgba(255,255,255,0.2)]" style={{ '--d': '220ms' }}>
+                Olympe
+              </h1>
+
+              <p className="olympe-rise mx-auto mt-6 max-w-lg text-base leading-relaxed text-gray-400 md:mx-0 md:text-lg" style={{ '--d': '360ms' }}>
+                Plongez dans l'univers immersif de San Andreas. Incarnez le personnage de vos rêves, rejoignez les forces de l'ordre, gérez une entreprise ou dominez la rue.
+              </p>
+
+              <div className="olympe-rise mt-10 flex flex-col items-center gap-3 sm:flex-row md:justify-start sm:justify-center" style={{ '--d': '480ms' }}>
+                <Link to="/reglement" className="group inline-flex w-full items-center justify-center gap-2 rounded-full bg-white px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-black transition-colors hover:bg-gray-200 sm:w-auto">
+                  Lire le règlement
+                  <ChevronRight size={18} className="transition-transform group-hover:translate-x-0.5" />
+                </Link>
+                <a href={DISCORD_LINK} target="_blank" rel="noopener noreferrer" className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-white/25 bg-black/30 px-7 py-3.5 text-sm font-bold uppercase tracking-wider text-white transition-colors hover:border-white/50 hover:bg-white/10 sm:w-auto">
+                  <MessageCircle size={18} />
+                  Rejoindre le Discord
+                </a>
+              </div>
             </div>
-            <div className="p-4">
-              <div className="flex justify-center mb-4 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"><Shield size={40} /></div>
-              <div className="text-4xl font-black mb-1">24/7</div>
-              <div className="text-gray-400 text-sm font-bold uppercase tracking-wider">Modération</div>
-            </div>
-            <div className="p-4">
-              <div className="flex justify-center mb-4 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"><Car size={40} /></div>
-              <div className="text-4xl font-black mb-1">150+</div>
-              <div className="text-gray-400 text-sm font-bold uppercase tracking-wider">Véhicules Imports</div>
-            </div>
-            <div className="p-4">
-              <div className="flex justify-center mb-4 text-white drop-shadow-[0_0_10px_rgba(255,255,255,0.5)]"><Map size={40} /></div>
-              <div className="text-4xl font-black mb-1">60fps</div>
-              <div className="text-gray-400 text-sm font-bold uppercase tracking-wider">Optimisation</div>
-            </div>
+
+            {/* Key art, framed on the right (under the text on small screens) */}
+            <figure className="olympe-rise relative mx-auto w-full max-w-md lg:max-w-none" style={{ '--d': '320ms' }}>
+              {/* offset outline behind the photo, kept inside the figure so its right edge is the column's edge */}
+              <div className="absolute top-4 left-4 right-0 bottom-0 rounded-[2rem] border border-white/15"></div>
+              <div className="relative mr-4 mb-4 aspect-[4/5] overflow-hidden rounded-[2rem] border border-white/15 bg-[#111] shadow-[0_30px_80px_-20px_rgba(0,0,0,0.9)]">
+                <img
+                  src={bgUrl}
+                  alt="Deux habitants d'Olympe posant sur le capot d'une voiture, de nuit en ville"
+                  className="h-full w-full object-cover object-[54%_center] saturate-[0.6]"
+                />
+                <div className="absolute inset-0 bg-gradient-to-t from-[#0a0a0a]/80 via-transparent to-transparent"></div>
+                <div className="absolute inset-0 rounded-[2rem] ring-1 ring-inset ring-white/10"></div>
+              </div>
+            </figure>
           </div>
         </div>
+
       </div>
     </>
   );
@@ -224,6 +241,12 @@ function MentionsLegales() {
       </div>
     </div>
   );
+}
+
+// Each rule's text is a run of sentences, one rule per sentence: split them
+// so they read as a list.
+function splitRule(text) {
+  return text.split(/(?<=[.!?])\s+(?=[A-ZÀ-ÖØ-Þ«])/).filter(Boolean);
 }
 
 function Reglement() {
@@ -456,135 +479,111 @@ function Reglement() {
     }
   ];
 
+  const rulesByTab = {
+    global: globalRules,
+    illegal: illegalRules,
+    legal: legalRules,
+    notions: notionsRules,
+  };
+  const currentTab = tabs.find((tab) => tab.id === activeTab);
+  const currentRules = rulesByTab[activeTab];
+
+  // Open a rule from the summary list and bring it into view
+  const goToRule = (id) => {
+    const el = document.getElementById(id);
+    if (!el) return;
+    el.open = true;
+    el.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  };
+
   return (
-    <div className="min-h-screen bg-[#0a0a0a] pt-32 pb-24 text-white">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-        
-        {/* Title Row */}
-        <div className="flex flex-col md:flex-row gap-8 mb-8">
-          <div className="w-full md:w-1/4 hidden md:block"></div>
-          <div className="w-full md:w-3/4">
-            <h1 className="text-4xl md:text-5xl font-black uppercase tracking-tight text-left">Règlement du Serveur</h1>
+    <div className="min-h-screen bg-[#0a0a0a] pb-24 text-white">
+      {/* Header */}
+      <header className="relative overflow-hidden border-b border-white/10 pt-36 pb-14">
+        <div className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_top_left,rgba(255,255,255,0.07),transparent_60%)]"></div>
+        <div className="relative mx-auto max-w-6xl px-6 sm:px-10">
+          <div className="flex items-center gap-3 text-[11px] font-bold uppercase tracking-[0.35em] text-gray-400">
+            <span className="h-px w-10 bg-white/40"></span>
+            Olympe · Serveur RP
           </div>
+          <h1 className="font-olympe mt-6 text-[clamp(3.5rem,9vw,6.5rem)] leading-[0.95]">Règlement</h1>
+          <p className="mt-5 max-w-xl text-base leading-relaxed text-gray-400 md:text-lg">
+            Les règles à connaître avant de rejoindre la ville. Le non-respect du règlement peut entraîner une sanction, de l'avertissement jusqu'au bannissement.
+          </p>
         </div>
+      </header>
 
-        <div className="flex flex-col md:flex-row gap-8">
-          {/* Sidebar Tabs */}
-          <div className="w-full md:w-1/4 flex flex-col gap-2">
-            {tabs.map((tab) => (
-              <button
-                key={tab.id}
-                onClick={() => setActiveTab(tab.id)}
-                className={`text-left px-6 py-4 rounded-xl border transition-all ${
-                  activeTab === tab.id 
-                    ? 'bg-white text-black border-white shadow-[0_0_15px_rgba(255,255,255,0.3)] font-bold' 
-                    : 'bg-[#111] text-gray-400 border-white/10 hover:border-white/40 hover:text-white hover:bg-[#161616]'
-                }`}
-              >
-                <div className="text-lg uppercase tracking-wider">{tab.name}</div>
-                <div className={`text-xs mt-1 ${activeTab === tab.id ? 'text-gray-700' : 'text-gray-500'}`}>
-                  {tab.description}
-                </div>
-              </button>
-            ))}
+      {/* Category tabs */}
+      <nav className="sticky top-20 z-30 border-b border-white/10 bg-[#0a0a0a]/90 backdrop-blur-md">
+        <div className="mx-auto flex max-w-6xl gap-2 overflow-x-auto px-6 py-3 [scrollbar-width:none] sm:px-10">
+          {tabs.map((tab) => (
+            <button
+              key={tab.id}
+              onClick={() => {
+                setActiveTab(tab.id);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+              }}
+              className={`flex shrink-0 items-center gap-2 rounded-full px-5 py-2 text-xs font-bold uppercase tracking-wider transition-colors ${
+                activeTab === tab.id
+                  ? 'bg-white text-black'
+                  : 'text-gray-400 hover:bg-white/10 hover:text-white'
+              }`}
+            >
+              {tab.name}
+              <span className={`text-[10px] ${activeTab === tab.id ? 'text-gray-500' : 'text-gray-600'}`}>
+                {rulesByTab[tab.id].length}
+              </span>
+            </button>
+          ))}
+        </div>
+      </nav>
+
+      <div key={activeTab} className="olympe-fade-in mx-auto grid max-w-6xl gap-12 px-6 pt-12 sm:px-10 lg:grid-cols-[240px_1fr]">
+        {/* Summary of the current category */}
+        <aside className="hidden lg:block">
+          <div className="sticky top-44">
+            <p className="text-[11px] font-bold uppercase tracking-[0.3em] text-gray-500">{currentTab.description}</p>
+            <ol className="mt-5 space-y-1 border-l border-white/10">
+              {currentRules.map((rule, idx) => (
+                <li key={rule.title}>
+                  <button
+                    onClick={() => goToRule(`${activeTab}-${idx}`)}
+                    className="-ml-px block w-full border-l border-transparent py-1.5 pl-4 text-left text-sm text-gray-400 transition-colors hover:border-white hover:text-white"
+                  >
+                    {rule.title}
+                  </button>
+                </li>
+              ))}
+            </ol>
           </div>
+        </aside>
 
-          {/* Content Area */}
-          <div className="w-full md:w-3/4 bg-[#111] p-8 rounded-xl border border-white/10 min-h-[500px]">
-            {activeTab === 'global' && (
-              <div className="animate-fade-in">
-                <h2 className="text-3xl font-bold mb-6 text-white border-b border-white/10 pb-4">Règlement Global</h2>
-                <div className="space-y-4">
-                  {globalRules.map((rule, idx) => (
-                    <details key={idx} className="bg-[#1a1a1a] border border-white/10 rounded-lg group [&_summary::-webkit-details-marker]:hidden">
-                      <summary className="font-bold text-lg p-4 cursor-pointer hover:bg-white/5 transition-colors flex justify-between items-center text-white">
-                        {rule.title}
-                        <ChevronRight className="w-5 h-5 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
-                      </summary>
-                      <div className="p-4 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-1">
-                        {rule.text}
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )}
-            
-            {activeTab === 'hrp' && (
-              <div className="animate-fade-in">
-                <h2 className="text-3xl font-bold mb-6 text-white border-b border-white/10 pb-4">Règlement HRP</h2>
-                <div className="space-y-4">
-                  {hrpRules.map((rule, idx) => (
-                    <details key={idx} className="bg-[#1a1a1a] border border-white/10 rounded-lg group [&_summary::-webkit-details-marker]:hidden">
-                      <summary className="font-bold text-lg p-4 cursor-pointer hover:bg-white/5 transition-colors flex justify-between items-center text-white">
-                        {rule.title}
-                        <ChevronRight className="w-5 h-5 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
-                      </summary>
-                      <div className="p-4 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-1">
-                        {rule.text}
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )}
+        {/* Rules */}
+        <div>
+          <h2 className="text-2xl font-black uppercase tracking-tight md:text-3xl">{currentTab.name}</h2>
+          <p className="mt-2 text-sm text-gray-500 lg:hidden">{currentTab.description}</p>
 
-            {activeTab === 'illegal' && (
-              <div className="animate-fade-in">
-                <h2 className="text-3xl font-bold mb-6 text-white border-b border-white/10 pb-4">Règlement Illégal</h2>
-                <div className="space-y-4">
-                  {illegalRules.map((rule, idx) => (
-                    <details key={idx} className="bg-[#1a1a1a] border border-white/10 rounded-lg group [&_summary::-webkit-details-marker]:hidden">
-                      <summary className="font-bold text-lg p-4 cursor-pointer hover:bg-white/5 transition-colors flex justify-between items-center text-white">
-                        {rule.title}
-                        <ChevronRight className="w-5 h-5 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
-                      </summary>
-                      <div className="p-4 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-1">
-                        {rule.text}
-                      </div>
-                    </details>
+          <div className="mt-8 border-t border-white/10">
+            {currentRules.map((rule, idx) => (
+              <details
+                key={rule.title}
+                id={`${activeTab}-${idx}`}
+                className="group scroll-mt-44 border-b border-white/10 [&_summary::-webkit-details-marker]:hidden"
+              >
+                <summary className="flex cursor-pointer items-center gap-5 py-5 transition-colors hover:text-white">
+                  <span className="w-8 shrink-0 font-mono text-xs text-gray-600">{String(idx + 1).padStart(2, '0')}</span>
+                  <span className="flex-1 text-base font-bold text-gray-200 group-open:text-white md:text-lg">{rule.title}</span>
+                  <ChevronRight className="h-5 w-5 shrink-0 text-gray-500 transition-transform group-open:rotate-90" />
+                </summary>
+                <ul className="space-y-3 pb-8 pl-13 pr-2 md:pr-10">
+                  {splitRule(rule.text).map((sentence, i) => (
+                    <li key={i} className="relative pl-5 leading-relaxed text-gray-400 before:absolute before:left-0 before:top-[0.7em] before:h-px before:w-2.5 before:bg-white/30">
+                      {sentence}
+                    </li>
                   ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'legal' && (
-              <div className="animate-fade-in">
-                <h2 className="text-3xl font-bold mb-6 text-white border-b border-white/10 pb-4">Règlement Légal</h2>
-                <div className="space-y-4">
-                  {legalRules.map((rule, idx) => (
-                    <details key={idx} className="bg-[#1a1a1a] border border-white/10 rounded-lg group [&_summary::-webkit-details-marker]:hidden">
-                      <summary className="font-bold text-lg p-4 cursor-pointer hover:bg-white/5 transition-colors flex justify-between items-center text-white">
-                        {rule.title}
-                        <ChevronRight className="w-5 h-5 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
-                      </summary>
-                      <div className="p-4 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-1">
-                        {rule.text}
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )}
-
-            {activeTab === 'notions' && (
-              <div className="animate-fade-in">
-                <h2 className="text-3xl font-bold mb-6 text-white border-b border-white/10 pb-4">Notions du RP</h2>
-                <div className="space-y-4">
-                  {notionsRules.map((rule, idx) => (
-                    <details key={idx} className="bg-[#1a1a1a] border border-white/10 rounded-lg group [&_summary::-webkit-details-marker]:hidden">
-                      <summary className="font-bold text-lg p-4 cursor-pointer hover:bg-white/5 transition-colors flex justify-between items-center text-white">
-                        {rule.title}
-                        <ChevronRight className="w-5 h-5 text-gray-500 group-open:rotate-90 transition-transform flex-shrink-0" />
-                      </summary>
-                      <div className="p-4 pt-0 text-gray-400 leading-relaxed border-t border-white/5 mt-1">
-                        {rule.text}
-                      </div>
-                    </details>
-                  ))}
-                </div>
-              </div>
-            )}
+                </ul>
+              </details>
+            ))}
           </div>
         </div>
       </div>

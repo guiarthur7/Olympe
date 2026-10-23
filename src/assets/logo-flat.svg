@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100" width="512" height="512">
+  <!-- Flat, single-colour version of the Olympe emblem, used for engravings -->
+  <defs>
+    <path id="star" d="M50 3 C58 30 69 43 97 50 C69 57 58 70 50 97 C42 70 31 57 3 50 C31 43 42 30 50 3 Z"/>
+    <path id="hole" d="M50 28 C56 37 63 44 72 50 C63 56 56 63 50 72 C44 63 37 56 28 50 C37 44 44 37 50 28 Z"/>
+    <!-- a thin gap separates the star from the disc behind it -->
+    <mask id="gap">
+      <rect width="100" height="100" fill="#fff"/>
+      <use href="#star" fill="#000" stroke="#000" stroke-width="7" stroke-linejoin="round"/>
+      <!-- one teardrop slit per quarter of the disc -->
+      <g fill="#000">
+        <path id="slit" d="M58 19 C66 21 73 27 77 36 C70 31 64 26 58 19 Z"/>
+        <use href="#slit" transform="rotate(90 50 50)"/>
+        <use href="#slit" transform="rotate(180 50 50)"/>
+        <use href="#slit" transform="rotate(270 50 50)"/>
+      </g>
+    </mask>
+    <mask id="cut">
+      <rect width="100" height="100" fill="#fff"/>
+      <use href="#hole" fill="#000"/>
+    </mask>
+  </defs>
+  <g fill="#fff" transform="rotate(6 50 50)">
+    <circle cx="50" cy="50" r="38" mask="url(#gap)"/>
+    <use href="#star" mask="url(#cut)"/>
+    <circle cx="50" cy="50" r="7.5"/>
+  </g>
+</svg>
